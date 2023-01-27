@@ -19,17 +19,13 @@ class UserProfileController extends Controller
         $user_profile = new CachingUserProfileRepository($user_profile);
 
 
-        $friends = $user_profile->friends($user);
-        $followers = $user_profile->followers($user);
-        $followings = $user_profile->followings($user);
-        $posts = $user_profile->posts($user);
+        $user->friends = $user_profile->friends($user);
+        $user->followers = $user_profile->followers($user);
+        $user->followings = $user_profile->followings($user);
+        $user->posts = $user_profile->posts($user);
 
         return response()->json([
-            'user' => $user,
-            'posts' => $posts,
-            'friends' => $friends,
-            'followers' => $followers,
-            'followings' => $followings,
+            'user' => $user
         ]);
         
     }
