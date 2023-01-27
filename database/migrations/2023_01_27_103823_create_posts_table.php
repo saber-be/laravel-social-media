@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('content');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::table('posts', function (Blueprint $table) {
