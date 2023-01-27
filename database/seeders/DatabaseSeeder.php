@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\UserConnection;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -37,10 +38,10 @@ class DatabaseSeeder extends Seeder
         print("Creating connections\n");
         $users = User::orderBy('id','desc')->take($num_users)->get();
         foreach ($users as $user) {
-            $user->followings()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['follower'],"created_at" => now(),"updated_at" => now()]);
-            $user->followers()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['follower'],"created_at" => now(),"updated_at" => now()]);
-            $user->friendsOfMine()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['friend'],"created_at" => now(),"updated_at" => now()]);
-            $user->friendsOf()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['friend'],"created_at" => now(),"updated_at" => now()]);
+            $user->followings()->attach($users->random(rand(2, 10)),['type' => UserConnection::TYPE_FOLLOWER,"created_at" => now(),"updated_at" => now()]);
+            $user->followers()->attach($users->random(rand(2, 10)),['type' => UserConnection::TYPE_FOLLOWER,"created_at" => now(),"updated_at" => now()]);
+            $user->friendsOfMine()->attach($users->random(rand(2, 10)),['type' => UserConnection::TYPE_FRIEND,"created_at" => now(),"updated_at" => now()]);
+            $user->friendsOf()->attach($users->random(rand(2, 10)),['type' => UserConnection::TYPE_FRIEND,"created_at" => now(),"updated_at" => now()]);
         }
 
     }
