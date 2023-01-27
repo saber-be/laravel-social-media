@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use App\Models\User;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,11 +14,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // ask user to input number of users
+        $num_users = $this->command->ask('How many users do you want to create?', 10);
+        
+        print("Creating $num_users users\n");
+        
+        for ($i = 0; $i < $num_users; $i++) {
+            try{
+                $users[] = User::factory()->hasPosts(rand(0, 10))->create();
+            }
+            catch (\Illuminate\Database\QueryException $e) {
+                // check if the error code is for duplicate entry
+                if ($e->errorInfo[1] == 1062) {
+                    // just ignore it
+                    print("The generated email is duplicate, skipping it.\n");
+                }else{
+                    throw $e;
+                }
+            }
+            
+        }
+        print("Creating connections\n");
+        $users = User::orderBy('id','desc')->take($num_users)->get();
+        foreach ($users as $user) {
+            $user->followings()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['follower'],"created_at" => now(),"updated_at" => now()]);
+            $user->followers()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['follower'],"created_at" => now(),"updated_at" => now()]);
+            $user->friendsOfMine()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['friend'],"created_at" => now(),"updated_at" => now()]);
+            $user->friendsOf()->attach($users->random(rand(2, 10)),['type' => User::$connection_type['friend'],"created_at" => now(),"updated_at" => now()]);
+        }
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

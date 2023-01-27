@@ -41,4 +41,44 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static $connection_type = [
+        'friend' => 0,
+        'follower' => 1,
+    ];
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'user_connections', 'user_id', 'target_user_id')
+        ->where('type', User::$connection_type['follower']);
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'user_connections', 'target_user_id', 'user_id')
+        ->where('type', User::$connection_type['follower']);
+    }
+
+    public function friendsOfMine()
+    {
+        return $this->belongsToMany(User::class, 'user_connections', 'user_id', 'target_user_id')
+        ->where('type', User::$connection_type['friend']);
+    }
+
+    public function friendsOf()
+    {
+        return $this->belongsToMany(User::class, 'user_connections', 'target_user_id', 'user_id')
+        ->where('type', User::$connection_type['friend']);
+    }
+
+    public function getFriendsAttribute()
+    {
+        $friendsOf = $this->friendsOf;
+        $friendsOfMine = $this->friendsOfMine;
+        return $friendsOf->merge($friendsOfMine);
+    }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
