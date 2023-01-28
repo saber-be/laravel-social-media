@@ -14,7 +14,12 @@ use App\Http\Controllers\UserProfileController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = App\Models\User::latest()->first();
+    if(!$user){
+        $data = ["message" => "No user found. Please run `sail db:seed` first."];
+        return response()->json($data, 404);
+    }
+    return redirect()->route('profile', ['user' => $user]);
 });
 
 
