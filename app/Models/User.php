@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Support\Collection;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -66,7 +66,7 @@ class User extends Authenticatable
         ->where('type', UserConnection::TYPE_FRIEND);
     }
 
-    public function getFriendsAttribute()
+    public function getFriendsAttribute() : Collection
     {
         $friendsOf = $this->friendsOf;
         $friendsOfMine = $this->friendsOfMine;
