@@ -1,5 +1,5 @@
 <?php
-namespace App\Repositories\Android;
+namespace App\Responders\Android;
 use Illuminate\Support\Collection;
 
 use App\Models\User;
