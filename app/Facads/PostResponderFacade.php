@@ -13,23 +13,8 @@ class PostResponderFacade extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        $device = PostResponderFacade::getAgentDevice();
-        return Config::get("deviceProviders.$device.post", App\Responder\WebPostResponder::class); 
+        $device = getAgentDevice();
+        return Config::get("responders.$device.post", App\Responder\WebPostResponder::class); 
     }
-
-    public static function getAgentDevice(): string
-    {
-        // check if device is android, iphone, or web
-        $device = Request()->header('User-Agent');
-        if (strpos($device, 'Android') !== false) {
-            return 'android';
-        } elseif (strpos($device, 'iPhone') !== false) {
-            return 'iphone';
-        } else {
-            return 'web';
-        }
-        
-    }
-
 
 }
