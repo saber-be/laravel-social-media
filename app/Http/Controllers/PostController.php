@@ -49,4 +49,8 @@ class PostController extends Controller
     public function update(Request $request, $post_id){
         return $this->network->update($post_id,$request->all());
     }
+
+    public function delete(Request $request, $post_id){
+        return $this->network->delete($post_id);
+    }
 }

@@ -34,7 +34,7 @@ Route::post('/posts/update/{post_id}', [PostController::class, 'update'])->name(
 Route::get('/posts/add', [PostController::class, 'add'])->name('add_post');
 Route::get('/posts/edit/{post_id}', [PostController::class, 'edit'])->name('edit_post');
 Route::get('/posts/{post_id}', [PostController::class, 'get'])->name('post');
-
+Route::delete('/posts/{post_id}', [PostController::class, 'delete'])->name('delete_post');
 
 Route::get('/user/{user_id}/followers', [FollowerController::class, 'all'])->name("user_followers");
 
