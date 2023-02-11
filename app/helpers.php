@@ -1,5 +1,12 @@
 <?php
 
+if(! function_exists('getRepository')){
+    function getRepository($name){
+        $repo = Config::get("repositories.$name");
+        return new $repo();
+    }
+}
+
 if (! function_exists('getAgentDevice')) {
     function getAgentDevice(): string
     {

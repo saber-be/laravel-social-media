@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Config;
 use App\Facads\PostResponderFacade;
 use App\Facads\ResponseFacade;
 use App\Repositories\CachingUserProfileRepository;
@@ -14,14 +14,14 @@ class PostController extends Controller
 {
     public function all(Request $request)
     {
-        $repo = new EloquentPostRepository();
+        $repo = getRepository("post");
         $posts = $repo->all();
         return PostResponderFacade::all($posts);
     }
 
     public function get(Request $request, $post_id)
     {
-        $repo = new EloquentPostRepository();
+        $repo = getRepository("post");
         $post = $repo->get($post_id);
         return PostResponderFacade::get($post);
     }
@@ -32,7 +32,7 @@ class PostController extends Controller
     }
 
     public function save(Request $request){
-        $repo = new EloquentPostRepository();
+        $repo = getRepository("post");
         $repo->add($request->all());
         return PostResponderFacade::addedSuccessfully();
     }
