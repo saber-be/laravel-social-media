@@ -1,8 +1,9 @@
 @extends('layout')
 
 @section('content')
+<ul class="list-group">
     @foreach($users as $user)
-    {{$user->name}}
+    <li class="list-group-item">{{$user->name}}</li>
     @endforeach
-    {{ $users->links()}}
+</ul>
 @endsection
