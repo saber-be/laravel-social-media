@@ -22,3 +22,12 @@ if (! function_exists('getAgentDevice')) {
         
     }
 }
+
+if (! function_exists('getResponder')) {
+    function getResponder($name)
+    {
+        $device = getAgentDevice();
+        $responder = Config::get("responders.$device.$name");
+        return new $responder(); 
+    }
+}

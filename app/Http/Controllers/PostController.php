@@ -5,25 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Config;
-use App\Facads\PostResponderFacade;
-use App\Facads\ResponseFacade;
-use App\Repositories\CachingUserProfileRepository;
-use App\Repositories\EloquentPostRepository;
 use App\SocialNetwork;
 class PostController extends Controller
 {
+    private $network;
+    public function __construct()
+    {
+        // dependency injection and inversion
+        $this->network = new SocialNetwork(getRepository("post"), getResponder("post"));
+    }
     public function all(Request $request)
     {
-        $repo = getRepository("post");
-        $posts = $repo->all();
-        return PostResponderFacade::all($posts);
+        return $this->network->all();
     }
 
     public function get(Request $request, $post_id)
     {
-        $repo = getRepository("post");
-        $post = $repo->get($post_id);
-        return PostResponderFacade::get($post);
+        return $this->network->view($post_id);
     }
 
     public function add(Request $request)
@@ -32,9 +30,7 @@ class PostController extends Controller
     }
 
     public function save(Request $request){
-        $repo = getRepository("post");
-        $repo->add($request->all());
-        return PostResponderFacade::addedSuccessfully();
+        return $this->network->add($request->all());
     }
 
 }

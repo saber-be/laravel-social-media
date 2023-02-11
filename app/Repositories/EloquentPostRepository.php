@@ -8,7 +8,8 @@ class EloquentPostRepository implements PostRepository {
 
     public function all()
     {
-        return Post::all();
+        // retun post with pagination
+        return Post::orderBy("created_at","desc")->paginate(10);
     }
     public function add($post) {
         return Post::create($post);
