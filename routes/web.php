@@ -15,12 +15,7 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/', function () {
-    $user = App\Models\User::latest()->first();
-    if(!$user){
-        $data = ["message" => "No user found. Please run `sail db:seed` first."];
-        return response()->json($data, 404);
-    }
-    return redirect()->route('profile', ['user' => $user]);
+    return redirect()->route('posts');
 });
 
 
@@ -32,4 +27,5 @@ Route::post('/posts/update/{post_id}', [PostController::class, 'update'])->name(
 Route::get('/posts/add', [PostController::class, 'add'])->name('add_post');
 Route::get('/posts/edit/{post_id}', [PostController::class, 'edit'])->name('edit_post');
 Route::get('/posts/{post_id}', [PostController::class, 'get'])->name('post');
+Route::delete('/posts/delete/{post_id}', [PostController::class, 'delete'])->name("delete_post") ;
 
