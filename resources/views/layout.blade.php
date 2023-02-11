@@ -12,6 +12,12 @@
 <header>
     <div class="px-3 py-2 text-bg-dark">
       <div class="container">
+      @if(session()->has('success'))
+          <div class="alert alert-success">
+              {{ session()->get('success') }}
+          </div>
+      @endif
+
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
