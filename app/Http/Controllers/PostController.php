@@ -26,11 +26,27 @@ class PostController extends Controller
 
     public function add(Request $request)
     {
-        return view('posts.add');
+        /*
+        mobile users do not need this page
+        this is just for web users.
+        */
+        return view('posts.addOrEdit');
+    }
+
+    public function edit(Request $request, $post_id)
+    {
+        /*
+        mobile users do not need this page
+        this is just for web users.
+        */
+        return $this->network->edit($post_id);
     }
 
     public function save(Request $request){
         return $this->network->add($request->all());
     }
 
+    public function update(Request $request, $post_id){
+        return $this->network->update($post_id,$request->all());
+    }
 }

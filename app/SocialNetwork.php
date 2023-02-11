@@ -35,5 +35,10 @@ class SocialNetwork implements SocialNetworkInterface
         $entity = $this->entityRepository->get($entityId);
         return $this->responder->get($entity);
     }
+
+    public function edit($entityId) {
+        $entity = $this->entityRepository->get($entityId);
+        return $this->responder->edit($entity);
+    }
    
 }

@@ -28,7 +28,8 @@ Route::get('/profile/{user}', [UserProfileController::class, 'show'])->name('pro
 
 Route::get('/posts', [PostController::class, 'all'])->name('posts');
 Route::post('/posts', [PostController::class, 'save'])->name('save_post');
+Route::post('/posts/update/{post_id}', [PostController::class, 'update'])->name('update_post');
 Route::get('/posts/add', [PostController::class, 'add'])->name('add_post');
-Route::get('/posts/edit', [PostController::class, 'add'])->name('edit_post');
+Route::get('/posts/edit/{post_id}', [PostController::class, 'edit'])->name('edit_post');
 Route::get('/posts/{post_id}', [PostController::class, 'get'])->name('post');
 

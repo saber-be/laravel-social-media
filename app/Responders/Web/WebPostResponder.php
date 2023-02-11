@@ -31,4 +31,9 @@ class WebPostResponder implements Responder
         return view('posts.post', compact('post'));
     }
 
+    public function edit($post)
+    {
+        return view('posts.addOrEdit', compact('post'));
+    }
+
 }
