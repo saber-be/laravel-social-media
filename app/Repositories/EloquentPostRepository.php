@@ -2,13 +2,16 @@
 namespace App\Repositories;
 use Illuminate\Support\Collection;
 use App\Models\Post;
+use App\Models\User;
 use App\Repositories\Interfaces\PostRepository;
 
 class EloquentPostRepository implements PostRepository {
 
     public function all()
     {
-        // retun post with pagination
+        if($user_id = Request()->user_id){
+            return User::findOrFail($user_id)->posts()->orderBy("created_at","desc")->paginate(10);    
+        }
         return Post::orderBy("created_at","desc")->paginate(10);
     }
     public function add($post) {

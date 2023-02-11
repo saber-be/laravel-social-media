@@ -24,9 +24,7 @@ class UserProfileController extends Controller
         $user->followings = $user_profile->followings($user);
         $user->posts = $user_profile->posts($user);
 
-        return response()->json([
-            'user' => $user
-        ]);
+        return view("users.profile",compact("user"));
         
     }
 }
