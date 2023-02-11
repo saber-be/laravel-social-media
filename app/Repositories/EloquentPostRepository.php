@@ -15,9 +15,9 @@ class EloquentPostRepository implements PostRepository {
         return Post::create($post);
     }
   
-    public function update($postId, $post) {
+    public function update($postId, $data) {
         $post = Post::find($postId);
-        $post->update($post);
+        $post->update($data);
         return $post;
     }
 
